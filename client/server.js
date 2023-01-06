@@ -10,6 +10,16 @@ const app = express();
 
 app.use('/', express.static('./client'));
 
+app.use(bodyParser.json());
+
+app.use((req, res, next) => {
+  console.log(`${req.method} request for ${req.url}`);
+  if (Object.keys(req.body).length) {
+    console.log(req.body);
+  }
+  next();
+});
+
 app.get('/dictionary', (req, res) => {
   res.json(skiTerms);
 });
